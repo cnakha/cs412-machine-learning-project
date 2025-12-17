@@ -1,16 +1,12 @@
 import { useState, useRef, useCallback } from "react";
-
 import {
-  GoogleMap,
-  DirectionsRenderer,
   useLoadScript,
   Autocomplete,
 } from "@react-google-maps/api";
+import MiddleView from "./MiddleView";
+import { ArrowDown } from "lucide-react";
 
-import { MapPin, ArrowDown } from "lucide-react";
-
-const API_BASE = "http://127.0.0.1:8000"; // FastAPI backend
-
+const API_BASE = import.meta.env.VITE_API_BASE;
 
 function App() {
 
@@ -21,16 +17,7 @@ function App() {
     west: -87.95,
   };
 
-  const mapContainerStyle = {
-    width: "100%",
-    height: "100%",
-  };
-
-  // Center on downtown Chicago-ish
-  const defaultCenter = { lat: 41.8781, lng: -87.6298 };
-
-  
-  const libraries = ["places"];
+  const libraries = ["places", "visualization"];
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -45,6 +32,7 @@ function App() {
       )
     : undefined;
 
+  const [view, setView] = useState("map");
   const [startLocation, setStartLocation] = useState("UIC Student Center East");
   const [endLocation, setEndLocation] = useState("The Art Institute of Chicago");
   const [currentSpeed, setCurrentSpeed] = useState(62); // mph
@@ -265,63 +253,21 @@ function App() {
   };
 
 
-  // Map render
-  const renderMap = () => {
-    if (!isLoaded) {
-      return (
-        <div className="w-full h-full flex items-center justify-center">
-          <p className="text-xs text-slate-500">
-            Loading map…
-          </p>
-        </div>
-      );
-    }
-
-    if (loadError) {
-      return (
-        <div className="w-full h-full flex items-center justify-center">
-          <p className="text-xs text-red-500">
-            Failed to load Google Maps.
-          </p>
-        </div>
-      );
-    }
-
-    return (
-      <GoogleMap
-        mapContainerStyle={mapContainerStyle}
-        zoom={13}
-        center={defaultCenter}
-      >
-        {directionsResult && (
-          <DirectionsRenderer directions={directionsResult} />
-        )}
-      </GoogleMap>
-    );
-  };
-
-  
   return (
     <main className="flex flex-1 bg-white justify-center items-center p-5">
       <div className="flex w-full min-h-vw rounded-2xl border p-10 flex-col gap-8 mt-5">
         <div className="flex flex-col lg:flex-row gap-10 w-full">
           {/* Left intro + button */}
           <div className="flex flex-col w-full lg:w-[30%] ">
-            {errorMsg && (
-              <p className="text-xs text-red-500 mt-1">
-                {errorMsg}
-              </p>
-            )}
 
             <h1 className="text-black text-[28px] font-semibold tracking-tight">
               Chicago Traffic Commute Time Forecaster
             </h1>
             <p className="mt-8 text-[12px] text-black max-w-2xl">
-              The objective of this project is to predict
-              commute times based on historic Chicago congestion levels,
-              distance, and other conditions. The goal is to help
+              Predict commute times based on various travel conditions. The goal of this project is to help
               commuters visualize and understand what affects overall travel time.
             </p>
+            
             {/* Top Control Bar */}
               <section className="w-full border border-black rounded-lg p-4 flex-1 flex-col mt-10 gap-4 h-full lg:max-w-[320px] flex">
                 {/* Locations */}
@@ -482,9 +428,6 @@ function App() {
                         <p className="block text-[10px] tracking-wide text-slate-500">
                           Day
                         </p>
-                        {/* <button className="flex pt-1 cursor-pointer">
-                          <RotateCw className="h-3 w-3 stroke-slate-400" />
-                        </button> */}
                       </div>
                       <input
                         type="date"
@@ -496,39 +439,75 @@ function App() {
                   </div>
                 </div>
               </section>
+
+            <div className="flex-1"/>
           </div>
 
-          {/* Right main content */}
-          <div className="w-full">
-            {/* Main content: Map + Right Panel */}
-            <section className="flex flex-col lg:flex-row gap-10 items-stretch h-full">
-              {/* Map */}
-              <div className="w-full rounded-lg overflow-hidden border border-black bg-slate-200 relative h-[320px] sm:h-[420px] lg:h-full lg:flex-1">
-                {renderMap()}
+              {/* Middle View: Map / Heatmap / Model Info */}
+              <div className="flex flex-col gap-4 w-full">
+
+                {/* View Button Bar */}
+                <div className="flex gap-2 border border-black p-1 rounded-full">
+                  <button 
+                    onClick={() => setView("map")}
+                    className={`flex items-center px-4 py-2 text-[12px] font-medium rounded-full transition 
+                      ${view === "map" ? "bg-black" : "bg-transparent hover:bg-slate-200"}
+                      ${view === "map" ? "text-white" : "text-black"}`
+                  }>
+                    Map
+                  </button>
+                  <button 
+                    onClick={() => setView("heatmap")}
+                    className={`flex items-center px-4 py-2 text-[12px] font-medium rounded-full transition 
+                      ${view === "heatmap" ? "bg-black" : "bg-transparent hover:bg-slate-200"}
+                      ${view === "heatmap" ? "text-white" : "text-black"}`}>
+                      Heatmap
+                  </button>
+                  <button 
+                    onClick={() => setView("model")}
+                    className={`flex items-center px-4 py-2 text-[12px] font-medium rounded-full transition
+                      ${view === "model" ? "bg-black" : "bg-transparent hover:bg-slate-200"}
+                      ${view === "model" ? "text-white" : "text-black"}`}>                        
+                      About Model
+                  </button>
+                  <button 
+                    onClick={() => setView("tech")}
+                    className={`flex items-center px-4 py-2 text-[12px] font-medium rounded-full transition
+                      ${view === "tech" ? "bg-black" : "bg-transparent hover:bg-slate-200"}
+                      ${view === "tech" ? "text-white" : "text-black"}`}>                        
+                      Tech Stack
+                  </button>
+                </div>
+                <MiddleView isLoaded={isLoaded} loadError={loadError} directionsResult={directionsResult} view={view}/>
               </div>
 
               {/* Right-hand prediction card */}
-              <div className="w-full lg:w-64 lg:max-w-[200px] flex flex-col gap-10">
-      
-              <div className="flex justify-center items-center w-full">
-                <button
-                  onClick={() => {
-                    handleRouteThenPredict();
-                  }}
-                  disabled={loading}
-                  className=" h-[90px] w-full p-8 rounded-md bg-black text-white text-[12px] font-medium flex flex-col justify-center items-center shadow-md hover:bg-[#1c1c1c] disabled:opacity-60 disabled:cursor-not-allowed transition"
-                >
-                  <span>
-                    {loading
-                      ? "Predicting..."
-                      : "Predict Chicago Commute Time"}
-                  </span>
-                  {/* <span className="text-xl">↓</span> */}
-                  <span><ArrowDown className=" h-7 w-7 stroke-white" /></span>
-                </button>
-              </div>
+              <div className="w-full lg:min-w-[200px] lg:max-w-[200px] flex flex-col gap-10">
+                {/* Predict Button */}
+                <div className="flex justify-center items-center w-full mt-16">
+                  <button
+                    onClick={() => {
+                      handleRouteThenPredict();
+                    }}
+                    disabled={loading}
+                    className=" h-[90px] w-full p-8 rounded-md bg-black text-white text-[12px] font-medium flex flex-col justify-center items-center shadow-md hover:bg-[#1c1c1c] disabled:opacity-60 disabled:cursor-not-allowed transition"
+                  >
+                    <span>
+                      {loading
+                        ? "Predicting..."
+                        : "Predict Chicago Commute Time"}
+                    </span>
+                    {/* <span className="text-xl">↓</span> */}
+                    <span><ArrowDown className=" h-7 w-7 stroke-white" /></span>
+                  </button>
+                </div>
 
-                <div className="rounded-md border border-black px-4 py-4 h-full flex flex-col gap-4 text-xs">
+                <div className="rounded-md border border-black px-4 py-4 flex flex-col gap-4 text-xs">
+                 {errorMsg && (
+                    <p className="text-xs text-red-500 mt-1">
+                      {errorMsg}
+                    </p>
+                  )}
                   <div className="flex justify-between items-center">
                     <span className="text-[10px] text-slate-500 tracking-wide">
                       Base Commute
@@ -564,14 +543,14 @@ function App() {
                     </span>
                   </div>
 
-                  <div className="mt-3 pt-5 border-t border-slate-400 flex justify-between items-center text-[11px] text-slate-400">
+                  <div className="mt-3 pt-6 border-t border-slate-400 flex justify-between items-center text-[11px] text-slate-400">
                     <span className="text-[10px] ">Google&apos;s forecast</span>
                     <span className="font-medium text-slate-600">
                       {formatMinutes(googleMinutes)}
                     </span>
                   </div>
 
-                  {routeSummary && (
+                  {routeSummary ? (
                     <div className="mt-2 text-sm text-black space-y-2 font-semibold">
                       <div>
                         Length: {routeSummary.lengthMiles.toFixed(2)} mi
@@ -581,11 +560,26 @@ function App() {
                         {routeSummary.direction})
                       </div>
                     </div>
+                  ) : (
+                    <div className="mt-2 text-sm text-black space-y-2 font-semibold">
+                      <div>
+                        Length: 0 mi
+                      </div>
+                      <div>
+                        Heading: 0° 
+                      </div>
+                    </div>
                   )}
+                  <p className="block text-[10px] tracking-wide text-slate-500">
+                  Created by: Cindy Nakhammouane and Elizabeth Ng
+                </p>
                 </div>
+
+                
+               
               </div>
-            </section>
-          </div>
+            {/* </section> */}
+          {/* </div> */}
         </div>
       </div>
     </main>

@@ -13,16 +13,28 @@ An interactive web application that predicts commute times in Chicago using hist
 
 # Tech Stack
 Frontend
-- React (Vite)
+- React 
 - Tailwind CSS
-- @react-google-maps/api
+- Javascript
 - Google Maps & Places APIs
+- HeatmapLayer
+- Figma
 
 Backend
 - FastAPI
+- REST API
 - Python
 - Linear Regression model trained on historic Chicago traffic data
 
+Machine Learning
+- Python
+- Scikit-learn
+- Linear Regression
+- Random Forest
+- XGBoost
+- Pandas
+- NumPy
+        
 
 # To start backend:
 cd commute-backend
@@ -31,6 +43,7 @@ uvicorn main:app --reload
 
 # To start frontend
 npm install
+cd frontend
 npm run dev
 
 # Members
