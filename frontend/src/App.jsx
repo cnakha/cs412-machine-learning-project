@@ -483,6 +483,7 @@ function App() {
                   <div className="flex-1"/>
                   <a 
                     href="https://github.com/cnakha/cs412-machine-learning-project"
+                    target="_blank" rel="noopener noreferrer"
                     className={`flex items-center px-4 py-2 font-medium rounded-full transition
                       text-balck bg-transparent hover:bg-slate-200 gap-1`}>                        
                       <Code size={20}/> 

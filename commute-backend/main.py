@@ -6,17 +6,17 @@ import math
 from pydantic import BaseModel
 from typing import List
 
-
+origins = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "https://cs412-machine-learning-project.vercel.app", 
+]
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "https://cs412-machine-learning-project.vercel.app/", 
-    ],  # frontend dev server
+    allow_origins=origins,  # frontend dev server
     allow_credentials=True,
     allow_methods=["*"],       # allow POST, GET, OPTIONS, etc.
     allow_headers=["*"],       # allow Content-Type, Authorization, etc.

@@ -48,5 +48,5 @@ cd frontend
 npm run dev
 
 # Members
-Elizabeth Ng
+Elizabeth Ng and 
 Cindy Nakhammouane
