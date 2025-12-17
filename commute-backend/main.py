@@ -15,7 +15,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://YOUR-VERCEL-APP.vercel.app", 
+        "https://cs412-machine-learning-project.vercel.app/", 
     ],  # frontend dev server
     allow_credentials=True,
     allow_methods=["*"],       # allow POST, GET, OPTIONS, etc.
