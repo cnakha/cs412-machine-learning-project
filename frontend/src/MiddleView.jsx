@@ -137,7 +137,7 @@ export default function MiddleView({isLoaded, loadError, directionsResult, view}
                 </h2>
                 <p className="text-white">
                     The React frontend is deployed as a static site on cloud hosting (e.g., Vercel), 
-                    while a FastAPI backend serves predictions from a trained .pkl machine learning model via REST APIs.
+                    while a FastAPI backend serves predictions from a trained .pkl machine learning model via REST APIs (e.g., Render).
                 </p>
 
                 <div className="flex flex-col bg-white rounded-md p-4 gap-6 mt-4">

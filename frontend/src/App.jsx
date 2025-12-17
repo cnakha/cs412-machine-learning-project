@@ -484,7 +484,7 @@ function App() {
               {/* Right-hand prediction card */}
               <div className="w-full lg:min-w-[200px] lg:max-w-[200px] flex flex-col gap-10">
                 {/* Predict Button */}
-                <div className="flex justify-center items-center w-full mt-16">
+                <div className="flex justify-center items-center w-full lg:mt-16">
                   <button
                     onClick={() => {
                       handleRouteThenPredict();
