@@ -4,7 +4,7 @@ import {
   Autocomplete,
 } from "@react-google-maps/api";
 import MiddleView from "./MiddleView";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Code } from "lucide-react";
 
 const API_BASE = import.meta.env.VITE_API_BASE;
 
@@ -270,6 +270,9 @@ function App() {
             
             {/* Top Control Bar */}
               <section className="w-full border border-black rounded-lg p-4 flex-1 flex-col mt-10 gap-4 h-full lg:max-w-[320px] flex">
+                <h3 className="text-sm font-semibold text-black">
+                    Travel Conditions
+                </h3>
                 {/* Locations */}
                 <div className="flex flex-col gap-4 flex-1">
                   <div>
@@ -477,6 +480,14 @@ function App() {
                       ${view === "tech" ? "text-white" : "text-black"}`}>                        
                       Tech Stack
                   </button>
+                  <div className="flex-1"/>
+                  <a 
+                    href="https://github.com/cnakha/cs412-machine-learning-project"
+                    className={`flex items-center px-4 py-2 font-medium rounded-full transition
+                      text-balck bg-transparent hover:bg-slate-200 gap-1`}>                        
+                      <Code size={20}/> 
+                      <p className="text-[12px]">Github</p>
+                  </a>
                 </div>
                 <MiddleView isLoaded={isLoaded} loadError={loadError} directionsResult={directionsResult} view={view}/>
               </div>

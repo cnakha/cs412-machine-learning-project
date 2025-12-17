@@ -105,21 +105,21 @@ export default function MiddleView({isLoaded, loadError, directionsResult, view}
                     </div>
                     <div className="flex gap-4 flex-wrap justify-center bg-white p-4 rounded-md">
                         <div className="flex flex-col gap-2">
-                            <img src="images/LR_scatter.png" alt="Model Diagram" className="w-full h-auto max-w-[190px] rounded-md border border-2 border-black"/>
+                            <img src="images/LR_scatter.png" alt="Model Diagram" className="w-full h-auto max-w-[190px] rounded-md   border-slate-200"/>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <img src="images/LR_eh.png" alt="Model Diagram" className="w-full h-auto max-w-[180px] rounded-md border border-2 border-black"/>
+                            <img src="images/LR_eh.png" alt="Model Diagram" className="w-full h-auto max-w-[180px] rounded-md  border-slate-200"/>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <img src="images/LR_res.png" alt="Model Diagram" className="w-full h-auto max-w-[190px] rounded-md border border-2 border-black"/>
+                            <img src="images/LR_res.png" alt="Model Diagram" className="w-full h-auto max-w-[190px] rounded-md  border-slate-200"/>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <img src="images/feature_Importance.png" alt="Model Diagram" className="w-full h-auto max-w-[225px] rounded-md border border-2 border-black"/>
+                            <img src="images/feature_Importance.png" alt="Model Diagram" className="w-full h-auto max-w-[225px] rounded-md border-slate-200"/>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <img src="images/learning_curve.png" alt="Model Diagram" className="w-full h-auto max-w-[245px] rounded-md border border-2 border-black"/>
+                            <img src="images/learning_curve.png" alt="Model Diagram" className="w-full h-auto max-w-[245px] rounded-md border-slate-200"/>
                         </div >
-                        <div className="w-[150px] h-[150px] text-[12px] max-w-[245px] rounded-md border border-2 border-black p-2 flex flex-col ">
+                        <div className="w-[150px] h-[125px] mt-3 text-[12px] max-w-[245px] border border-black p-3 flex flex-col ">
                             <p className="font-medium mb-2 text-sm">Evaluation Metrics</p>
                             <p>MAE: 4.98s</p>
                             <p>R2: 0.956</p>
